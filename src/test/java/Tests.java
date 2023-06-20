@@ -6,8 +6,11 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Tests {
@@ -36,7 +39,7 @@ public class Tests {
          */
 
         webDriver.manage().window().maximize();
-        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
 
@@ -140,14 +143,126 @@ public class Tests {
     }
 
     /*
-    6
-    Check, that website shows all courses after click on "All courses" button.
-     */
 
+    Check, that website shows all courses after click on "All courses" button.
+    Can not do this test, as there is no unique attribute for link with course name. And script fetches all links
+
+    For example:
+    Current element:
+    <a href="https://skillfactory.ru/python-fullstack-web-developer" target="_blank" style="color: inherit" rel="noopener">Fullstack-разработчик на&nbsp;Python</a>
+    Element with unique attribute:
+    <a href="https://skillfactory.ru/python-fullstack-web-developer" target="_blank" style="color: inherit" rel="noopener" coursename="1">Fullstack-разработчик на&nbsp;Python</a>
+     */
+    @Ignore
     @Test
     public void mainPageAllCourses() {
         SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
         skillfactoryMainPage.openWebsite();
         skillfactoryMainPage.clickAllCoursesButton();
+        String url = "";
+        List<WebElement> allURLs = webDriver.findElements(By.xpath("//div[@class='t396__artboard rendered' and @data-artboard-recid='567832210']//a"));
+        System.out.println("Total links on the Wb Page: " + allURLs.size());
+        Iterator<WebElement> iterator = allURLs.iterator();
+        while (iterator.hasNext()) {
+            url = iterator.next().getText();
+            System.out.println(url);
+        }
+
+
     }
+    /*
+    6
+    Check, that browser opens new tab with www.habr.ru, when click on Habr button in footer
+    */
+
+    @Test
+    public void testLinkHabr() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsite();
+        skillfactoryMainPage.clickOnHabrLink();
+        Assert.assertEquals(skillfactoryMainPage.habrLinkUrl, webDriver.getCurrentUrl());
+        System.out.println("Correct link is" + skillfactoryMainPage.linkToHabr);
+    }
+
+    /*
+    7
+    Check, that browser opens new tab with skillfactory youtube channel, when click on Youtube button in footer
+     */
+
+    @Test
+    public void testLinkYoutube() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.clickOnYoutubeLink();
+
+        // Assert. We use if as youtube throws 2 different links
+
+        if (webDriver.getCurrentUrl().equals(skillfactoryMainPage.youtubeLinkUrl)) {
+            Assert.assertEquals(skillfactoryMainPage.youtubeLinkUrl, webDriver.getCurrentUrl());
+
+        } else {
+            Assert.assertEquals(skillfactoryMainPage.youtubeLinkUrlLong, webDriver.getCurrentUrl());
+
+        }
+
+    }
+
+    /*
+    8
+    Check, that browser opens new tab with skillfactory Telegram channel, when click on Telegram button in footer
+    Flacky test, for unknown reason sometimes Telegram button in unclickable
+     */
+
+    @Test
+    public void testLinkTelegram() {
+        System.out.println("Flacky test, for unknown reason sometimes Telegram button in unclickable.");
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.clickOnTelegramLink();
+        //skillfactoryMainPage.clickOnTelegramLink();
+        System.out.println(webDriver.getTitle() + " - title");
+        System.out.println(webDriver.getCurrentUrl() + " - url");
+        Assert.assertEquals(skillfactoryMainPage.telegramLinkUrl, webDriver.getCurrentUrl());
+
+    }
+
+    /*
+    9
+    Positive test. Sign up for email in footer. Provide valid email address
+    Test may fail due to Captcha check
+     */
+
+    @Test
+    public void signUpForEmailPositive() {
+        System.out.println("Test may fail due to Captcha check");
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsite();
+        skillfactoryMainPage.signUpForEmailFooterPositive();
+        Assert.assertTrue(skillfactoryMainPage.signUpForEmailPositiveFooter_successMessage.equals(webDriver.findElement(skillfactoryMainPage.signUpForEmailPositiveFooter_successMessageFromWebsite).getText()));
+    }
+
+   /*
+    10
+    Negative test. Sign up for email in footer. Provide invalid email address
+    Error message should appear
+     */
+
+    @Test
+    public void signUpForEmailNegative() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsite();
+        skillfactoryMainPage.signUpForEmailFooterNegative();
+        Assert.assertTrue(skillfactoryMainPage.signUpForEmailFooterNegative_errorMessage.equals(webDriver.findElement(skillfactoryMainPage.signUpForEmailFooterNegative_errorMessage_locator).getText()));
+    }
+
+    /*
+    11
+    Positive Test. Sign up for QA with Java course
+
+    */
+
+    @Test
+    public void signUpForQAcourse(){
+
+    }
+
+
 }

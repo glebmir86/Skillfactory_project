@@ -12,6 +12,7 @@ public class SkillfactoryCourses {
     public SkillfactoryCourses(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
+
     //------------------------------Locators and variables---------------------------------------------
     //------------------------------Other variables----------------------------------------
     //------------------------------Methods----------------------------------------
