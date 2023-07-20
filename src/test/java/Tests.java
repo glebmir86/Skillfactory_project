@@ -1,8 +1,8 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -71,7 +71,7 @@ public class Tests {
     Contact form, negative test. Checks, that incorrect email returns error
      */
 
-    @Ignore
+
     @Test
     public void contactFormWrongEmail() {
         SkillfactoryContactForm skillfactoryContactForm = new SkillfactoryContactForm(webDriver);
@@ -91,7 +91,7 @@ public class Tests {
     3
     Contact form, negative test. Checks, that incorrect phone returns an error. Phone number too short
      */
-    @Ignore
+
     @Test
     public void contactFormWrongPhone() {
         SkillfactoryContactForm skillfactoryContactForm = new SkillfactoryContactForm(webDriver);
@@ -112,7 +112,7 @@ public class Tests {
     Choose another country - Latvia for phone number
      */
 
-    @Ignore
+
     @Test
     public void contactFormPhoneNumberForLatvia() {
         SkillfactoryContactForm skillfactoryContactForm = new SkillfactoryContactForm(webDriver);
@@ -129,7 +129,7 @@ public class Tests {
     Do not agree for Data processing. Should return error message
     */
 
-    @Ignore
+
     @Test
     public void contactFormNoDataProcessing() {
         SkillfactoryContactForm skillfactoryContactForm = new SkillfactoryContactForm(webDriver);
@@ -140,6 +140,7 @@ public class Tests {
         skillfactoryContactForm.contactFormClickDataProcessingCheckbox();
         skillfactoryContactForm.contactFormClickSubmitButton();
         Assert.assertEquals(skillfactoryContactForm.contactFormNoDataProcessingErrorMessage, webDriver.findElement(skillfactoryContactForm.contactFormCheckBoxForDataProcessingErrorMessage).getText());
+        System.out.println("Flacky test. In case of failure try to rerun");
     }
 
     /*
@@ -153,6 +154,7 @@ public class Tests {
     Element with unique attribute:
     <a href="https://skillfactory.ru/python-fullstack-web-developer" target="_blank" style="color: inherit" rel="noopener" coursename="1">Fullstack-разработчик на&nbsp;Python</a>
      */
+
     @Ignore
     @Test
     public void mainPageAllCourses() {
@@ -194,7 +196,7 @@ public class Tests {
         SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
         skillfactoryMainPage.clickOnYoutubeLink();
 
-        // Assert. We use if as youtube throws 2 different links
+        // Assert. We use if as youtube throws different links
 
         if (webDriver.getCurrentUrl().equals(skillfactoryMainPage.youtubeLinkUrl)) {
             Assert.assertEquals(skillfactoryMainPage.youtubeLinkUrl, webDriver.getCurrentUrl());
@@ -232,7 +234,7 @@ public class Tests {
 
     @Test
     public void signUpForEmailPositive() {
-        System.out.println("Test may fail due to Captcha check");
+        System.out.println("Test may fail due to Captcha check. In case of failure try to rerun, or check manually");
         SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
         skillfactoryMainPage.openWebsite();
         skillfactoryMainPage.signUpForEmailFooterPositive();
@@ -251,17 +253,294 @@ public class Tests {
         skillfactoryMainPage.openWebsite();
         skillfactoryMainPage.signUpForEmailFooterNegative();
         Assert.assertTrue(skillfactoryMainPage.signUpForEmailFooterNegative_errorMessage.equals(webDriver.findElement(skillfactoryMainPage.signUpForEmailFooterNegative_errorMessage_locator).getText()));
+        System.out.println("Flacky test. In case of failure try to rerun");
     }
 
     /*
     11
+    Positive Test. Check that we can navigate to QA with Java course page
+
+    */
+
+    @Test
+    public void openPageQAcourseWithJava() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsiteMaximizeWindow();
+
+        // Click button for QA related courses and go to https://skillfactory.ru/courses/testirovanie
+        Courses_testirovanie courses_testirovanie = skillfactoryMainPage.clickQACoursesButton();
+
+        // Relationship between two pages
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = courses_testirovanie.qa_JavaCourseButton_click();
+
+        // Wait for web page to load
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.randomMenu);
+
+
+        // To do another page relation and Assert.
+        Assert.assertEquals(java_qa_engineer_testirovshik.courseLink, webDriver.getCurrentUrl());
+    }
+
+   /*
+    12
     Positive Test. Sign up for QA with Java course
 
     */
 
     @Test
-    public void signUpForQAcourse(){
+    public void signUpQAcourseWithJava() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsiteMaximizeWindow();
 
+        // Click button for QA related courses and go to https://skillfactory.ru/courses/testirovanie
+        Courses_testirovanie courses_testirovanie = skillfactoryMainPage.clickQACoursesButton();
+
+        // Relationship between two pages
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = courses_testirovanie.qa_JavaCourseButton_click();
+
+        // Wait for web page to load
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.randomMenu);
+
+        // Enter valid test data and submit
+        java_qa_engineer_testirovshik.zapisatsaNaKursMethod();
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.qaCourseSignUpForm);
+        java_qa_engineer_testirovshik.signUpFormPositive();
+
+
+        System.out.println("Flacky test. In case of failure try to rerun");
+
+        Assert.assertEquals("Спасибо! Мы получили вашу заявку на курс.", webDriver.findElement(java_qa_engineer_testirovshik.signUpFormSuccessMessage).getText());
+    }
+
+    /*
+    13
+    Negative Test. Sign up for QA with Java course with wrong email
+    */
+
+    @Test
+    public void signUpQAcourseWithJavaWrongEmail() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsiteMaximizeWindow();
+
+        // Click button for QA related courses and go to https://skillfactory.ru/courses/testirovanie
+        Courses_testirovanie courses_testirovanie = skillfactoryMainPage.clickQACoursesButton();
+
+        // Relationship between two pages
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = courses_testirovanie.qa_JavaCourseButton_click();
+
+        // Wait for web page to load
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.randomMenu);
+
+        // Enter valid test data and submit
+        java_qa_engineer_testirovshik.zapisatsaNaKursMethod();
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.qaCourseSignUpForm);
+        java_qa_engineer_testirovshik.signUpFormNegativeWrongEmail();
+
+        // Show URL
+        System.out.println("This URL is - " + webDriver.getCurrentUrl());
+
+        // Assert
+        String errorMessage = webDriver.findElement(java_qa_engineer_testirovshik.signUpFormErrorMessageEmail).getText();
+
+        Assert.assertEquals(java_qa_engineer_testirovshik.signUpFormErrorMessageEmailString, errorMessage);
+
+        System.out.println("Error message shown: " + errorMessage);
+    }
+
+    /*
+    14
+    Negative Test. Sign up for QA with Java course with wrong Name
+    */
+
+    @Test
+    public void signUpQAcourseWithJavaWrongName() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = new Java_qa_engineer_testirovshik(webDriver);
+        skillfactoryMainPage.goToQAEngeneeringCoursePage();
+        java_qa_engineer_testirovshik.signUpFormNegativeWrongName();
+
+        String errorMessage = webDriver.findElement(java_qa_engineer_testirovshik.signUpFormErrorMessageName).getText();
+
+        Assert.assertEquals(java_qa_engineer_testirovshik.signUpFormErrorMessageNameStringPlease, errorMessage);
+
+        System.out.println("Actual error message: " + errorMessage);
+
+    }
+
+    /*
+    14
+    Positive Test. Sign up form, click on promocode. Field for promocode input should get visible
+
+    Here no Assert is required. If we can enter text in promocode field, it means field exists.
+    */
+
+    @Test
+    public void signUpQAcourseCheckPromocodeField() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = new Java_qa_engineer_testirovshik(webDriver);
+        skillfactoryMainPage.goToQAEngeneeringCoursePage();
+        java_qa_engineer_testirovshik.signUpFormCheckPromocodeField();
+    }
+
+
+    /*
+    15
+    Test https://skillfactory.ru/java-qa-engineer-testirovshik-po
+    Check, that you can move mouse coursor to "Курсы" and navigate to "Все онлайн курсы"
+    */
+
+    @Test
+    /*
+    Question:
+    Why if I try to click on the element via Actions it returns error?
+    Line of code to click on the element:
+    new Actions(webDriver).click(coursesButton).perform();
+    Error:
+    org.openqa.selenium.interactions.MoveTargetOutOfBoundsException: move target out of bounds
+
+    If I try to click on element via command:
+    webDriver.findElement(coursesButtonLocator).click();
+
+    It executes without any errors.
+     */
+    public void checkKursiMenuVseOnlineKursi() {
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = new Java_qa_engineer_testirovshik(webDriver);
+        java_qa_engineer_testirovshik.goToThisPageURL();
+        SkillfactoryCourses skillfactoryCourses = java_qa_engineer_testirovshik.goToCourseMenuAllOnlineCourses();
+        Assert.assertEquals(skillfactoryCourses.thisPageURL, webDriver.getCurrentUrl());
+
+
+    }
+
+    /*
+    16
+    https://skillfactory.ru/java-qa-engineer-testirovshik-po
+    Check that course programme section "Тестирование web" expands
+     */
+    @Test
+    public void courseProgrammeTestirovanieWebSectionExpands() {
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = new Java_qa_engineer_testirovshik(webDriver);
+        java_qa_engineer_testirovshik.goToThisPageURL();
+        java_qa_engineer_testirovshik.courseProgrammeSectionTestirovanieWebExpands();
+
+        // Check if expand section element is visible: Create variable and if statement
+
+        WebElement description = webDriver.findElement(java_qa_engineer_testirovshik.courseProgrammeTestirovanieWebDescription);
+
+        boolean expand;
+
+        if (description.isDisplayed()) {
+            expand = true;
+            System.out.println("Element is visible");
+
+
+        } else {
+
+            expand = false;
+            System.out.println("Element is not visible");
+        }
+        Assert.assertTrue(expand);
+
+
+    }
+
+    /*
+    17
+    https://skillfactory.ru/java-qa-engineer-testirovshik-po
+    Check that course programme section "Автоматизация web c помощью Selenium" expands
+     */
+
+    @Test
+    public void courseProgrammeAvtomatizacijaWebSPomowjuSeleniumSectionExpands() {
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = new Java_qa_engineer_testirovshik(webDriver);
+        java_qa_engineer_testirovshik.goToThisPageURL();
+        java_qa_engineer_testirovshik.courseProgrammeSectionAvtomatizacijaWebSPomowjuSeleniumExpands();
+
+        // Check if expand section element is visible: Create variable and if statement
+
+        WebElement description = webDriver.findElement(java_qa_engineer_testirovshik.courseProgrammeAvtomatizacijaSeleniumDescription);
+
+        boolean expand;
+
+        if (description.isDisplayed()) {
+            expand = true;
+            System.out.println("Element is visible");
+
+
+        } else {
+
+            expand = false;
+            System.out.println("Element is not visible");
+        }
+        Assert.assertTrue(expand);
+
+    }
+
+    /*
+    18
+    https://skillfactory.ru/courses
+    Test if course IT Специалист с нуля is visible
+     */
+
+    @Test
+    public void courseITSpecialistSNuljaIsVisible() {
+        SkillfactoryCourses skillfactoryCourses = new SkillfactoryCourses(webDriver);
+        skillfactoryCourses.goToThisPageURL();
+
+        skillfactoryCourses.checkCourseVisiblity_ITSpecialistSNulja();
+        Assert.assertTrue(skillfactoryCourses.courseVisibilityITSpecialistSNulja);
+
+
+    }
+
+     /*
+    19
+    https://skillfactory.ru/courses
+    Test if course Teстировщик на Java is visible
+     */
+
+    @Test
+    public void course_TestirovshikNaJava_IsVisible(){
+        SkillfactoryCourses skillfactoryCourses = new SkillfactoryCourses(webDriver);
+        skillfactoryCourses.goToThisPageURL();
+        skillfactoryCourses.checkCourseVisiblity_TestirovwikNaJava();
+
+        Assert.assertTrue(skillfactoryCourses.courseTestirovwikNaJava);
+
+    }
+
+    /*
+    20
+    https://skillfactory.ru/courses
+    Check "Only in July" promo is present
+     */
+
+    @Test
+    public void checkJulyPromo(){
+        SkillfactoryCourses skillfactoryCourses = new SkillfactoryCourses(webDriver);
+        skillfactoryCourses.goToThisPageURL();
+        skillfactoryCourses.findJulyPromotion();
+
+    }
+
+    /*
+    21
+    https://skillfactory.ru/
+    Check if chat opens, when you click on chat button
+     */
+
+    @Test
+    public void openChatWindow(){
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsite();
+        skillfactoryMainPage.openChat();
+
+
+    }
+
+    @AfterEach
+    public void closeBrowser(){
+        webDriver.close();
     }
 
 

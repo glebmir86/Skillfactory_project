@@ -5,15 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a60ff672-bc67-4e7b-b9db-598d9a890fa3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/Template" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Courses_testirovanie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Courses_testirovanie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/SkillfactoryContactForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SkillfactoryContactForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/SkillfactoryCourses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SkillfactoryCourses.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/SkillfactoryMainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SkillfactoryMainPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/SkillfactoryMainPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/SkillfactoryMainPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/Tests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -42,7 +50,17 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.Tests.signUpForEmailNegative">
+  <component name="RunManager" selected="JUnit.Tests.mainPageAllCourses">
+    <configuration name="Tests.mainPageAllCourses" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Skillfactory_project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Tests" />
+      <option name="METHOD_NAME" value="mainPageAllCourses" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tests.signUpForEmailNegative" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Skillfactory_project" />
       <option name="PACKAGE_NAME" value="" />
@@ -58,16 +76,6 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="Tests" />
       <option name="METHOD_NAME" value="signUpForEmailPositive" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Tests.testLinkHabr" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Skillfactory_project" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="Tests" />
-      <option name="METHOD_NAME" value="testLinkHabr" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -94,19 +102,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.Tests.mainPageAllCourses" />
+      <item itemvalue="JUnit.Tests.testLinkYoutube" />
       <item itemvalue="JUnit.Tests.signUpForEmailNegative" />
       <item itemvalue="JUnit.Tests.signUpForEmailPositive" />
-      <item itemvalue="JUnit.Tests.testLinkHabr" />
       <item itemvalue="JUnit.Tests.testLinkTelegram" />
-      <item itemvalue="JUnit.Tests.testLinkYoutube" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Tests.signUpForEmailNegative" />
-        <item itemvalue="JUnit.Tests.signUpForEmailPositive" />
+        <item itemvalue="JUnit.Tests.mainPageAllCourses" />
         <item itemvalue="JUnit.Tests.testLinkTelegram" />
         <item itemvalue="JUnit.Tests.testLinkYoutube" />
-        <item itemvalue="JUnit.Tests.testLinkHabr" />
+        <item itemvalue="JUnit.Tests.signUpForEmailNegative" />
+        <item itemvalue="JUnit.Tests.signUpForEmailPositive" />
       </list>
     </recent_temporary>
   </component>

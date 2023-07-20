@@ -1,9 +1,12 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
+
 
 public class SkillfactoryMainPage {
 
@@ -39,6 +42,12 @@ public class SkillfactoryMainPage {
 
     By signUpForEmailFooterNegative_errorMessage_locator = By.xpath("//form[@id='form598180441']//div[@data-input-lid='1676893875873']//div[@class='t-input-error']");
 
+
+    By onlineCoursesButton = By.xpath("//div[@data-elem-id='1679405234205']//a");
+
+    By chatButton = By.xpath("//div[@id='carrotquest-messenger-collapsed-container']//div[@id='chat-container']");
+    By chatWindow = By.xpath("//iframe[@id='carrot-messenger-frame']");
+
     //------------------------------Other variables----------------------------------------
     String habrLinkUrl = "https://habr.com/ru/companies/skillfactory/articles/";
     String youtubeLinkUrl = "https://www.youtube.com/channel/UClOTq6XN8g7-16QLGnZ6_EA";
@@ -50,21 +59,19 @@ public class SkillfactoryMainPage {
     String signUpForEmailFooterNegative_errorMessage = "Please enter a valid email address";
 
 
-
     String validEmail = "test@test.com";
     String invalidEmail = "wrong_email.com";
 
 
-
-
     //------------------------------Methods----------------------------------------
 
-    // Common methods
+    //--------------------------------------------------------------Common Methods
 
     //Open website
     public void openWebsite() {
 
         webDriver.get("https://skillfactory.ru/");
+        webDriver.manage().window().maximize();
 
     }
 
@@ -83,7 +90,26 @@ public class SkillfactoryMainPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(waitFor));
     }
 
+    public void goToQAEngeneeringCoursePage() {
+        SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
+        skillfactoryMainPage.openWebsiteMaximizeWindow();
 
+        // Click button for QA related courses and go to https://skillfactory.ru/courses/testirovanie
+        Courses_testirovanie courses_testirovanie = skillfactoryMainPage.clickQACoursesButton();
+
+        // Relationship between two pages
+        Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = courses_testirovanie.qa_JavaCourseButton_click();
+
+        // Wait for web page to load
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.randomMenu);
+
+        // Enter valid test data and submit
+        java_qa_engineer_testirovshik.zapisatsaNaKursMethod();
+        java_qa_engineer_testirovshik.waitVisibilityOfElementLocated_Xpath(java_qa_engineer_testirovshik.qaCourseSignUpForm);
+    }
+
+
+    //--------------------------------------------------------------Methods
     // Click on All course button and go to /courses page
     public SkillfactoryCourses clickAllCoursesButton() {
         webDriver.findElement(allCoursesButton).click();
@@ -111,9 +137,10 @@ public class SkillfactoryMainPage {
         // Print info about test
 
         System.out.println("Can be flacky test. If test failed, check in browser what link is shown there");
-        System.out.println("Correct links are:");
+        System.out.println("Correct link should contain:");
         System.out.println(youtubeLinkUrl);
-        System.out.println(youtubeLinkUrlLong);
+        System.out.println("If test failed please compare actual and expected link");
+        System.out.println("Or click on actual link and check the channel");
 
         // to switch to new opened tab
         for (String windowHandle : webDriver.getWindowHandles()) {
@@ -146,8 +173,9 @@ public class SkillfactoryMainPage {
         }
 
     }
-// signup for newsletter in footer. Positive scenario
-    public void signUpForEmailFooterPositive(){
+
+    // signup for newsletter in footer. Positive scenario
+    public void signUpForEmailFooterPositive() {
         openWebsite();
         webDriver.findElement(emailInputFooter).sendKeys(validEmail);
         webDriver.findElement(emailInputFooterSubmitButton).click();
@@ -155,14 +183,33 @@ public class SkillfactoryMainPage {
     }
 
     // signup for newsletter in footer with invalid email . Negative scenario
-    public void signUpForEmailFooterNegative(){
+    public void signUpForEmailFooterNegative() {
         openWebsite();
         webDriver.findElement(emailInputFooter).sendKeys(invalidEmail);
         webDriver.findElement(emailInputFooterSubmitButton).click();
         waitVisibilityOfElementLocated_Xpath(signUpForEmailFooterNegative_errorMessage_locator);
-        String signUpForEmailFooterNegative_errorMessage = webDriver.findElement(signUpForEmailFooterNegative_errorMessage_locator).getText();
+
     }
 
+    // Click on QA courses button and go to https://skillfactory.ru/courses/testirovanie webpage
+    public Courses_testirovanie clickQACoursesButton() {
+
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(onlineCoursesButton));
+
+        // Move mouse coursor on the button and click
+        Actions action = new Actions(webDriver);
+        WebElement onlineCourses = webDriver.findElement(onlineCoursesButton);
+        action.moveToElement(onlineCourses).click().build().perform();
+
+        return new Courses_testirovanie(webDriver);
+    }
+
+    // Open Chat and check that chat window is opened
+    public void openChat() {
+        webDriver.findElement(chatButton).click();
+        webDriver.findElement(chatWindow).isDisplayed();
+    }
 
 
 }

@@ -53,6 +53,13 @@ public class SkillfactoryContactForm {
     String contactFormSuccessMessageExpected = "Спасибо! Мы позвоним вам в течение дня с 10 до 19 и поможем выбрать направление для обучения"; // Ожидаемое сообщение при успешном заполнении формы
     String contactFormNoDataProcessingErrorMessage = "Required field";
 
+    String correctName = "Test user";
+    String emptyName = "";
+    String correctEmail = "testuser@gmail.com";
+    String invalidEmail = "testuser#123.com";
+    String phoneNumberRU = "4991234123";
+
+
     //------------------------------Methods----------------------------------------
 
     // Common methods

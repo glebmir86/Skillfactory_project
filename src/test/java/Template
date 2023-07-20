@@ -1,0 +1,17 @@
+Template for new Classes
+
+//------------------------------WebDriver and Constructor----------------------------------------
+
+    public WebDriver webDriver;
+
+    public ${Classname}() {
+
+    }
+
+    public ${Classname}(WebDriver webDriver) {
+        this.webDriver = webDriver;
+    }
+
+    //------------------------------Locators and variables---------------------------------------------
+    //------------------------------Other variables----------------------------------------
+    //------------------------------Methods----------------------------------------
