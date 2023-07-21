@@ -1,8 +1,8 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -62,7 +62,7 @@ public class Tests {
         System.out.println("Please check browser or try manually.");
         skillfactoryContactForm.contactFormPositiveScenario();
         Assert.assertEquals(skillfactoryContactForm.contactFormSuccessMessageExpected, webDriver.findElement(By.xpath(skillfactoryContactForm.locatorForContactFormSuccessMessageActualMessage)).getText());
-
+        closeBrowser();
 
     }
 
@@ -84,7 +84,7 @@ public class Tests {
             System.out.println("Error message shown:");
         }
         System.out.println(webDriver.findElement(skillfactoryContactForm.contactFormWrongEmailMessage).getText());
-
+        closeBrowser();
     }
 
     /*
@@ -104,6 +104,7 @@ public class Tests {
             System.out.println("Error message shown:");
         }
         System.out.println(webDriver.findElement(skillfactoryContactForm.contactFormWrongPhoneNumber).getText());
+        closeBrowser();
     }
 
     /*
@@ -121,6 +122,7 @@ public class Tests {
         skillfactoryContactForm.contactFormEmail("test@email.com");
         skillfactoryContactForm.contactFormPhoneNumberLatvia();
         Assert.assertEquals("+371", webDriver.findElement(skillfactoryContactForm.contactFormGetLatviaCode).getText());
+        closeBrowser();
     }
 
     /*
@@ -141,6 +143,7 @@ public class Tests {
         skillfactoryContactForm.contactFormClickSubmitButton();
         Assert.assertEquals(skillfactoryContactForm.contactFormNoDataProcessingErrorMessage, webDriver.findElement(skillfactoryContactForm.contactFormCheckBoxForDataProcessingErrorMessage).getText());
         System.out.println("Flacky test. In case of failure try to rerun");
+        closeBrowser();
     }
 
     /*
@@ -169,6 +172,7 @@ public class Tests {
             url = iterator.next().getText();
             System.out.println(url);
         }
+        closeBrowser();
 
 
     }
@@ -184,6 +188,7 @@ public class Tests {
         skillfactoryMainPage.clickOnHabrLink();
         Assert.assertEquals(skillfactoryMainPage.habrLinkUrl, webDriver.getCurrentUrl());
         System.out.println("Correct link is" + skillfactoryMainPage.linkToHabr);
+        closeBrowser();
     }
 
     /*
@@ -205,8 +210,9 @@ public class Tests {
             Assert.assertEquals(skillfactoryMainPage.youtubeLinkUrlLong, webDriver.getCurrentUrl());
 
         }
-
+        closeBrowser();
     }
+
 
     /*
     8
@@ -223,12 +229,12 @@ public class Tests {
         System.out.println(webDriver.getTitle() + " - title");
         System.out.println(webDriver.getCurrentUrl() + " - url");
         Assert.assertEquals(skillfactoryMainPage.telegramLinkUrl, webDriver.getCurrentUrl());
-
+        closeBrowser();
     }
 
     /*
     9
-    Positive test. Sign up for email in footer. Provide valid email address
+    Positive test. Sign up for Skillfactory newsletter in footer. Provide valid email address
     Test may fail due to Captcha check
      */
 
@@ -239,6 +245,7 @@ public class Tests {
         skillfactoryMainPage.openWebsite();
         skillfactoryMainPage.signUpForEmailFooterPositive();
         Assert.assertTrue(skillfactoryMainPage.signUpForEmailPositiveFooter_successMessage.equals(webDriver.findElement(skillfactoryMainPage.signUpForEmailPositiveFooter_successMessageFromWebsite).getText()));
+        closeBrowser();
     }
 
    /*
@@ -254,6 +261,7 @@ public class Tests {
         skillfactoryMainPage.signUpForEmailFooterNegative();
         Assert.assertTrue(skillfactoryMainPage.signUpForEmailFooterNegative_errorMessage.equals(webDriver.findElement(skillfactoryMainPage.signUpForEmailFooterNegative_errorMessage_locator).getText()));
         System.out.println("Flacky test. In case of failure try to rerun");
+        closeBrowser();
     }
 
     /*
@@ -279,6 +287,7 @@ public class Tests {
 
         // To do another page relation and Assert.
         Assert.assertEquals(java_qa_engineer_testirovshik.courseLink, webDriver.getCurrentUrl());
+        closeBrowser();
     }
 
    /*
@@ -310,6 +319,7 @@ public class Tests {
         System.out.println("Flacky test. In case of failure try to rerun");
 
         Assert.assertEquals("Спасибо! Мы получили вашу заявку на курс.", webDriver.findElement(java_qa_engineer_testirovshik.signUpFormSuccessMessage).getText());
+        closeBrowser();
     }
 
     /*
@@ -345,6 +355,7 @@ public class Tests {
         Assert.assertEquals(java_qa_engineer_testirovshik.signUpFormErrorMessageEmailString, errorMessage);
 
         System.out.println("Error message shown: " + errorMessage);
+        closeBrowser();
     }
 
     /*
@@ -365,11 +376,12 @@ public class Tests {
 
         System.out.println("Actual error message: " + errorMessage);
 
+        closeBrowser();
     }
 
     /*
-    14
-    Positive Test. Sign up form, click on promocode. Field for promocode input should get visible
+    15
+    Positive Test. When sign up for the course, in contact form click on promocode. Field for promocode input should get visible
 
     Here no Assert is required. If we can enter text in promocode field, it means field exists.
     */
@@ -380,11 +392,12 @@ public class Tests {
         Java_qa_engineer_testirovshik java_qa_engineer_testirovshik = new Java_qa_engineer_testirovshik(webDriver);
         skillfactoryMainPage.goToQAEngeneeringCoursePage();
         java_qa_engineer_testirovshik.signUpFormCheckPromocodeField();
+        closeBrowser();
     }
 
 
     /*
-    15
+    16
     Test https://skillfactory.ru/java-qa-engineer-testirovshik-po
     Check, that you can move mouse coursor to "Курсы" and navigate to "Все онлайн курсы"
     */
@@ -410,10 +423,11 @@ public class Tests {
         Assert.assertEquals(skillfactoryCourses.thisPageURL, webDriver.getCurrentUrl());
 
 
+        closeBrowser();
     }
 
     /*
-    16
+    17
     https://skillfactory.ru/java-qa-engineer-testirovshik-po
     Check that course programme section "Тестирование web" expands
      */
@@ -442,10 +456,11 @@ public class Tests {
         Assert.assertTrue(expand);
 
 
+        closeBrowser();
     }
 
     /*
-    17
+    18
     https://skillfactory.ru/java-qa-engineer-testirovshik-po
     Check that course programme section "Автоматизация web c помощью Selenium" expands
      */
@@ -474,10 +489,11 @@ public class Tests {
         }
         Assert.assertTrue(expand);
 
+        closeBrowser();
     }
 
     /*
-    18
+    19
     https://skillfactory.ru/courses
     Test if course IT Специалист с нуля is visible
      */
@@ -491,55 +507,59 @@ public class Tests {
         Assert.assertTrue(skillfactoryCourses.courseVisibilityITSpecialistSNulja);
 
 
+        closeBrowser();
     }
 
      /*
-    19
+    20
     https://skillfactory.ru/courses
     Test if course Teстировщик на Java is visible
      */
 
     @Test
-    public void course_TestirovshikNaJava_IsVisible(){
+    public void course_TestirovshikNaJava_IsVisible() {
         SkillfactoryCourses skillfactoryCourses = new SkillfactoryCourses(webDriver);
         skillfactoryCourses.goToThisPageURL();
         skillfactoryCourses.checkCourseVisiblity_TestirovwikNaJava();
 
         Assert.assertTrue(skillfactoryCourses.courseTestirovwikNaJava);
 
-    }
-
-    /*
-    20
-    https://skillfactory.ru/courses
-    Check "Only in July" promo is present
-     */
-
-    @Test
-    public void checkJulyPromo(){
-        SkillfactoryCourses skillfactoryCourses = new SkillfactoryCourses(webDriver);
-        skillfactoryCourses.goToThisPageURL();
-        skillfactoryCourses.findJulyPromotion();
-
+        closeBrowser();
     }
 
     /*
     21
+    https://skillfactory.ru/courses
+    Check "Only in July" promo is visible
+     */
+
+    @Test
+    public void checkJulyPromo() {
+        SkillfactoryCourses skillfactoryCourses = new SkillfactoryCourses(webDriver);
+        skillfactoryCourses.goToThisPageURL();
+        skillfactoryCourses.findJulyPromotion();
+
+        closeBrowser();
+    }
+
+    /*
+    22
     https://skillfactory.ru/
     Check if chat opens, when you click on chat button
      */
 
     @Test
-    public void openChatWindow(){
+    public void openChatWindow() {
         SkillfactoryMainPage skillfactoryMainPage = new SkillfactoryMainPage(webDriver);
         skillfactoryMainPage.openWebsite();
         skillfactoryMainPage.openChat();
 
 
+        closeBrowser();
     }
 
-    @AfterEach
-    public void closeBrowser(){
+
+    public void closeBrowser() {
         webDriver.close();
     }
 
